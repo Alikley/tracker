@@ -4,12 +4,14 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { FaBug } from "react-icons/fa";
 import classNames from "classnames";
+
 const Navbar = () => {
   const currentPath = usePathname();
   const links = [
     { lable: "Dashboard", href: "/" },
     { lable: "Issues", href: "/issues" },
   ];
+  
   return (
     <nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center">
       <Link href="/">
@@ -17,9 +19,8 @@ const Navbar = () => {
       </Link>
       <ul className="flex space-x-6">
         {links.map((link) => (
-          <li>
+          <li key={link.href}>
             <Link
-              key={link.href}
               className={classNames({
                 "text-zinc-900": link.href === currentPath,
                 "text-zinc-500": link.href !== currentPath,
