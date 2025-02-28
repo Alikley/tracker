@@ -17,6 +17,8 @@ const IsuuesDetailPage = async ({ params }: Props) => {
     <div>
       <h1>{issues.title}</h1>
       <h1>{issues.decription}</h1>
+      <h1>{issues.status}</h1>
+      <h1>{issues.createdAt.toDateString()}</h1>
     </div>
   );
 };
