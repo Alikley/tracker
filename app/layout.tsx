@@ -1,12 +1,14 @@
 import "@radix-ui/themes/styles.css";
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Theme } from "@radix-ui/themes";
+import { Theme, ThemePanel } from "@radix-ui/themes";
 import Navbar from "./Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
+  
   subsets: ["latin"],
 });
 
