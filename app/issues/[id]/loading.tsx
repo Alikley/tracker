@@ -1,5 +1,5 @@
 import { Box, Card, Flex } from "@radix-ui/themes";
-import IssueAction from "../IssueAction";
+import IssueAction from "../list/IssueAction";
 import { Skeleton } from "@/app/components";
 
 const LoadingIssuesPage = () => {
