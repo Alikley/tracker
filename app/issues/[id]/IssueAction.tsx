@@ -7,7 +7,7 @@ const IssueAction = () => {
     <div>
       <div>
         <Button mt="3">
-          <Link href={"/issues"}>Back</Link>
+          <Link href={"/issues/list"}>Back</Link>
         </Button>
       </div>
     </div>
