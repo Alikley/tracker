@@ -27,20 +27,20 @@ const IsuuesDetailPage = async ({ params }: Props) => {
       <Box className="md:col-span-4">
         <IssueDetails issue={issues} />
       </Box>
-      <Box>
+      {/* <Box>
         <Flex direction="column" gap="4">
           <EditIssueButton issueId={issues.id} />
           <DeleteIssueButton issueId={issues.id} />
           <AssigneeSelect />
         </Flex>
-      </Box>
-      {/* {session && <Box>
+      </Box> */}
+      {session && <Box>
         <Flex direction="column" gap="4">
           <EditIssueButton issueId={issues.id} />
           <DeleteIssueButton issueId={issues.id} />
           <AssigneeSelect />
         </Flex>
-      </Box>} */}
+      </Box>}
       <IssueAction />
     </Grid>
   );
