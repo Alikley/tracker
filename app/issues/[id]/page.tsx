@@ -8,6 +8,7 @@ import DeleteIssueButton from "./DeleteIssueButton";
 import { getServerSession } from "next-auth";
 import authOption from "@/app/auth/authOption";
 import AssigneeSelect from "./AssigneeSelect";
+import { Metadata } from "next";
 
 interface Props {
   params: { id: string };
@@ -27,23 +28,31 @@ const IsuuesDetailPage = async ({ params }: Props) => {
       <Box className="md:col-span-4">
         <IssueDetails issue={issues} />
       </Box>
-      {/* <Box>
+      <Box>
+        <Flex direction="column" gap="4">
+          <EditIssueButton issueId={issues.id} />
+          <DeleteIssueButton issueId={issues.id} />
+          <AssigneeSelect issue={issues}/>
+        </Flex>
+      </Box>
+      {/* {session && <Box>
         <Flex direction="column" gap="4">
           <EditIssueButton issueId={issues.id} />
           <DeleteIssueButton issueId={issues.id} />
           <AssigneeSelect />
         </Flex>
-      </Box> */}
-      {session && <Box>
-        <Flex direction="column" gap="4">
-          <EditIssueButton issueId={issues.id} />
-          <DeleteIssueButton issueId={issues.id} />
-          <AssigneeSelect />
-        </Flex>
-      </Box>}
+      </Box>} */}
       <IssueAction />
     </Grid>
   );
 };
-
+export async function generateMetadata({ params }: Props) {
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+  return {
+    title: issue?.title,
+    description: "Details of issue" + issue?.id,
+  };
+}
 export default IsuuesDetailPage;
