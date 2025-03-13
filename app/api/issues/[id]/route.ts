@@ -1,5 +1,5 @@
 import authOption from "@/app/auth/authOption";
-import { schema } from "@/app/validationSchemas";
+import { pathcIssueSchema } from "@/app/validationSchemas";
 import { prisma } from "@/prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,13 +8,21 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const session = await getServerSession(authOption);
-  if (!session) return NextResponse.json({}, { status: 401 });
+  // const session = await getServerSession(authOption);
+  // if (!session) return NextResponse.json({}, { status: 401 });
 
   const body = await request.json();
-  const validation = schema.safeParse(body);
+  const validation = pathcIssueSchema.safeParse(body);
   if (!validation.success)
     return NextResponse.json(validation.error.format(), { status: 400 });
+
+  if (body.assignedToUserId) {
+    const user = await prisma.user.findUnique({
+      where: { id: body.assignedToUserId },
+    });
+    if (!user)
+      return NextResponse.json({ error: "Invalid user." }, { status: 404 });
+  }
 
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
@@ -27,6 +35,7 @@ export async function PATCH(
     data: {
       title: body.title,
       decription: body.decription,
+      assignedToUserId:body.assignedToUserId
     },
   });
 
@@ -37,8 +46,8 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const session = await getServerSession(authOption);
-  if (!session) return NextResponse.json({}, { status: 401 });
+  // const session = await getServerSession(authOption);
+  // if (!session) return NextResponse.json({}, { status: 401 });
 
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
